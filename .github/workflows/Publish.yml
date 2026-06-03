@@ -10,7 +10,7 @@ env:
 
 jobs:
   get-version:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, DE, linux]
     outputs:
       VERSION: ${{ steps.get_version.outputs.VERSION }}
     steps:
@@ -28,7 +28,7 @@ jobs:
       VERSION: ${{ needs.get-version.outputs.VERSION }}
     outputs:
       VERSION: ${{ env.VERSION }}
-    runs-on: windows-latest
+    runs-on: [self-hosted, DE, windows]
     steps:
       - uses: actions/checkout@v4
 
@@ -74,7 +74,7 @@ jobs:
       VERSION: ${{ needs.get-version.outputs.VERSION }}
     outputs:
       VERSION: ${{ env.VERSION }}
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, DE, linux]
     steps:
       - name: install dependencies
         run: |
@@ -131,7 +131,7 @@ jobs:
       fail-fast: false
       matrix:
         arch: [ aarch64, x86_64 ]
-    runs-on: macos-latest
+    runs-on: [self-hosted, DE, macos]
     steps:
       - uses: actions/checkout@v4
 
@@ -174,7 +174,7 @@ jobs:
 
   create-release:
     needs: [ windows-build, linux-build, macos-build ]
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, DE, linux]
     permissions:
       contents: write
     steps:
