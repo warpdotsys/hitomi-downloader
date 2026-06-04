@@ -160,6 +160,18 @@ pub fn export_cbz(app: AppHandle, comic: Comic) -> CommandResult<()> {
 #[allow(clippy::needless_pass_by_value)]
 #[tauri::command(async)]
 #[specta::specta]
+pub fn pause_download_task(download_manager: State<DownloadManager>, id: i32) -> CommandResult<()> {
+    download_manager.pause_download_task(id).map_err(|err| {
+        let err_msg = format!("Failed to pause download task with ID `{id}`");
+        CommandError::from(&err_msg, err)
+    })?;
+    tracing::debug!("Paused download task with ID `{id}` successfully");
+    Ok(())
+}
+
+#[allow(clippy::needless_pass_by_value)]
+#[tauri::command(async)]
+#[specta::specta]
 pub async fn download_comics_by_ids(
     hitomi_client: State<'_, HitomiClient>,
     download_manager: State<DownloadManager>,
