@@ -5,7 +5,7 @@ import { DropdownOption, SelectOption, useMessage, useNotification, NIcon } from
 import ComicCard from '../components/ComicCard.vue'
 import { useStore } from '../store.ts'
 import { useI18n } from '../utils.ts'
-import { PhMagnifyingGlass, PhArrowRight, PhChecks, PhCloudArrowDown } from '@phosphor-icons/vue'
+import { PhMagnifyingGlass, PhArrowRight, PhChecks, PhCloudArrowDown, PhCloud } from '@phosphor-icons/vue'
 import FloatLabelInput from '../components/FloatLabelInput.vue'
 import { SelectionArea } from '@viselect/vue'
 import { useMultiSelect } from '../composables/useMultiSelect.ts'
@@ -34,6 +34,7 @@ const {
 } = useSuggestion()
 
 const searching = ref<boolean>(false)
+const downloadingAll = ref<boolean>(false)
 
 watch(
   () => store.searchResult,
@@ -66,6 +67,24 @@ async function search(query: string, pageNum: number) {
   store.searchResult = result.data
 
   searching.value = false
+}
+
+async function downloadAll() {
+  if (store.searchResult === undefined || downloadingAll.value) return
+  const ids = store.searchResult.ids
+  if (ids.length === 0) return
+
+  downloadingAll.value = true
+  message.info(t('search_pane.download_all_started', { count: ids.length }))
+
+  const result = await commands.downloadComicsByIds(ids)
+  if (result.status === 'error') {
+    console.error(result.error)
+    message.error(t('search_pane.download_all_failed'))
+  } else {
+    message.success(t('search_pane.download_all_queued', { count: ids.length }))
+  }
+  downloadingAll.value = false
 }
 
 async function handlePageChange(pageNum: number) {
@@ -390,11 +409,23 @@ defineExpose({ search })
         :on-clickoutside="() => (contextMenuShowing = false)" />
     </SelectionArea>
 
-    <n-pagination
-      v-if="store.searchResult !== undefined"
-      class="box-border p-2 pt-0 mt-auto"
-      :page-count="store.searchResult.totalPage"
-      :page="currentPage"
-      @update:page="handlePageChange" />
+    <div v-if="store.searchResult !== undefined" class="flex items-center gap-2 box-border px-2 pt-0 mt-auto">
+      <n-pagination
+        class="flex-1"
+        :page-count="store.searchResult.totalPage"
+        :page="currentPage"
+        @update:page="handlePageChange" />
+      <n-button
+        size="small"
+        type="warning"
+        :loading="downloadingAll"
+        :disabled="store.searchResult.ids.length === 0"
+        @click="downloadAll">
+        <template #icon>
+          <n-icon size="18"><PhCloud /></n-icon>
+        </template>
+        {{ t('search_pane.download_all') }} ({{ store.searchResult.ids.length }})
+      </n-button>
+    </div>
   </div>
 </template>

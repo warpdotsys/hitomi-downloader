@@ -149,6 +149,14 @@ export const commands = {
       else return { status: 'error', error: e as any }
     }
   },
+  async downloadComicsByIds(ids: number[]): Promise<Result<null, CommandError>> {
+    try {
+      return { status: 'ok', data: await TAURI_INVOKE('download_comics_by_ids', { ids }) }
+    } catch (e) {
+      if (e instanceof Error) throw e
+      else return { status: 'error', error: e as any }
+    }
+  },
 }
 
 /** user-defined events **/

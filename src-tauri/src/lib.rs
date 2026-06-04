@@ -55,6 +55,7 @@ pub fn run() {
             get_cover_data,
             get_synced_comic,
             get_image_data,
+            download_comics_by_ids,
         ])
         // 注册所有的事件，前端可以监听这些事件
         .events(tauri_specta::collect_events![

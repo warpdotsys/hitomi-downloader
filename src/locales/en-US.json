@@ -74,7 +74,11 @@
     "searching_warning": "Search is processing, please try again later",
     "search_success": "Search done",
     "comic_id_invalid": "Invalid Comic ID format",
-    "enter_comic_id_or_url": "Please enter Comic ID or URL"
+    "enter_comic_id_or_url": "Please enter Comic ID or URL",
+    "download_all": "Download All",
+    "download_all_started": "Queuing {count} comics for download...",
+    "download_all_queued": "{count} comics queued for download",
+    "download_all_failed": "Failed to queue downloads"
   },
   "downloaded_pane": {
     "name": "Local",
@@ -84,7 +88,11 @@
     "pdf_exported": "PDF exported",
     "cbz_exporting": "Exporting CBZ",
     "cbz_export_error": "CBZ export failed",
-    "cbz_exported": "CBZ exported"
+    "cbz_exported": "CBZ exported",
+    "export_all_cbz": "Export All CBZ",
+    "export_all_pdf": "Export All PDF",
+    "export_all_cbz_started": "Exporting {count} comics as CBZ...",
+    "export_all_pdf_started": "Exporting {count} comics as PDF..."
   },
   "comic_pane": {
     "name": "Comic",

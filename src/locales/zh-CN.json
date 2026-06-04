@@ -74,7 +74,11 @@
     "searching_warning": "有搜索正在进行，请稍后再试",
     "search_success": "搜索成功",
     "comic_id_invalid": "漫画ID格式错误",
-    "enter_comic_id_or_url": "请输入漫画ID或链接"
+    "enter_comic_id_or_url": "请输入漫画ID或链接",
+    "download_all": "下载全部",
+    "download_all_started": "正在排队下载 {count} 本漫画...",
+    "download_all_queued": "已排队下载 {count} 本漫画",
+    "download_all_failed": "排队下载失败"
   },
   "downloaded_pane": {
     "name": "本地库存",
@@ -84,7 +88,11 @@
     "pdf_exported": "pdf导出完成",
     "cbz_exporting": "正在导出cbz",
     "cbz_export_error": "cbz导出失败",
-    "cbz_exported": "cbz导出完成"
+    "cbz_exported": "cbz导出完成",
+    "export_all_cbz": "导出全部CBZ",
+    "export_all_pdf": "导出全部PDF",
+    "export_all_cbz_started": "正在导出 {count} 本漫画为CBZ...",
+    "export_all_pdf_started": "正在导出 {count} 本漫画为PDF..."
   },
   "comic_pane": {
     "name": "漫画详情",

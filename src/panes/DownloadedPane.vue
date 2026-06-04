@@ -6,7 +6,7 @@ import { open } from '@tauri-apps/plugin-dialog'
 import { useStore } from '../store.ts'
 import ComicCard from '../components/ComicCard.vue'
 import { useI18n } from '../utils.ts'
-import { PhFolderOpen, PhChecks, PhFilePdf, PhFileZip } from '@phosphor-icons/vue'
+import { PhFolderOpen, PhChecks, PhFilePdf, PhFileZip, PhDownload } from '@phosphor-icons/vue'
 import { SelectionArea } from '@viselect/vue'
 import { useMultiSelect } from '../composables/useMultiSelect.ts'
 
@@ -153,6 +153,35 @@ async function showExportDirInFileManager() {
   if (store.config === undefined) {
     return
   }
+  const result = await commands.showPathInFileManager(store.config.exportDir)
+  if (result.status === 'error') {
+    console.error(result.error)
+  }
+}
+
+async function exportAllCbz() {
+  const comics = downloadedComics.value
+  if (comics.length === 0) return
+  message.info(t('downloaded_pane.export_all_cbz_started', { count: comics.length }))
+  for (const comic of comics) {
+    const result = await commands.exportCbz(comic)
+    if (result.status === 'error') {
+      console.error(result.error)
+    }
+  }
+}
+
+async function exportAllPdf() {
+  const comics = downloadedComics.value
+  if (comics.length === 0) return
+  message.info(t('downloaded_pane.export_all_pdf_started', { count: comics.length }))
+  for (const comic of comics) {
+    const result = await commands.exportPdf(comic)
+    if (result.status === 'error') {
+      console.error(result.error)
+    }
+  }
+}
   console.log(currentPageComics.value)
 
   const result = await commands.showPathInFileManager(store.config.exportDir)
@@ -277,6 +306,20 @@ function useContextMenu() {
         </template>
       </n-button>
     </n-input-group>
+    <div class="flex gap-2 px-2">
+      <n-button size="small" :disabled="downloadedComics.length === 0" @click="exportAllCbz">
+        <template #icon>
+          <n-icon size="18"><PhFileZip /></n-icon>
+        </template>
+        {{ t('downloaded_pane.export_all_cbz') }} ({{ downloadedComics.length }})
+      </n-button>
+      <n-button size="small" :disabled="downloadedComics.length === 0" @click="exportAllPdf">
+        <template #icon>
+          <n-icon size="18"><PhFilePdf /></n-icon>
+        </template>
+        {{ t('downloaded_pane.export_all_pdf') }} ({{ downloadedComics.length }})
+      </n-button>
+    </div>
 
     <SelectionArea
       v-if="currentPageComics.length > 0"
