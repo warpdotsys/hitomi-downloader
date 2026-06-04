@@ -8,12 +8,6 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "dialog:default",
-    "core:window:default",
-    "core:window:allow-show",
-    "core:window:allow-hide",
-    "core:window:allow-set-focus",
-    "core:window:allow-close",
-    "core:window:allow-prevent-close"
+    "dialog:default"
   ]
 }
