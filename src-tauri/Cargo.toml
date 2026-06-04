@@ -18,7 +18,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2.12", features = [] }
+tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
 
@@ -54,10 +54,6 @@ uuid = { version = "1.16.0", features = ["v4"] }
 image = { version = "0.25.6", features = ["webp"], default-features = false }
 zip = { version = "4.0.0", default-features = false }
 walkdir = { version = "2.5.0" }
-
-# 漏洞修复：强制最低安全版本
-openssl = ">=0.10.80"
-rand = ">=0.9.3"
 
 [profile.release]
 strip = true
