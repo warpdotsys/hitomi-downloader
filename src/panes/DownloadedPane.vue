@@ -4,7 +4,7 @@ import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import { MessageReactive, useMessage, DropdownOption, NIcon } from 'naive-ui'
 import { open } from '@tauri-apps/plugin-dialog'
 import { useStore } from '../store.ts'
-import DownloadedComicCard from '../components/DownloadedComicCard.vue'
+import ComicCard from '../components/ComicCard.vue'
 import { useI18n } from '../utils.ts'
 import { PhFolderOpen, PhChecks, PhFilePdf, PhFileZip } from '@phosphor-icons/vue'
 import { SelectionArea } from '@viselect/vue'
@@ -293,7 +293,7 @@ function useContextMenu() {
         :data-key="comic.id"
         :class="['selectable rounded p-[2px] relative', selectedIds.has(comic.id) ? 'selected' : '']"
         @contextmenu="() => onContextMenu(comic.id)">
-        <downloaded-comic-card :search="search" :comic="comic" />
+        <comic-card :search="search" :comic="comic" show-export />
         <div class="absolute top-2 left-2 z-10 bg-white/50 rounded flex items-center justify-center p-1" @mousedown.stop @touchstart.stop @pointerdown.stop @click.stop>
           <n-checkbox
             size="large"

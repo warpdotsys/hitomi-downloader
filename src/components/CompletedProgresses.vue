@@ -2,7 +2,7 @@
 import { ProgressData } from '../types.ts'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useStore } from '../store.ts'
-import DownloadedComicCard from './DownloadedComicCard.vue'
+import ComicCard from './ComicCard.vue'
 import { SelectionArea } from '@viselect/vue'
 import { useMultiSelect } from '../composables/useMultiSelect.ts'
 import { DropdownOption } from 'naive-ui'
@@ -120,7 +120,7 @@ function useDropdown() {
       :data-key="comicId"
       :class="['selectable rounded p-[2px]', selectedIds.has(comicId) ? 'selected' : '']"
       @contextmenu="() => onContextMenu(comicId)">
-      <downloaded-comic-card :search="search" v-model:comic="progressData.comic" />
+      <comic-card :search="search" :comic="progressData.comic" show-export />
     </div>
     <n-dropdown
       placement="bottom-start"

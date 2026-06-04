@@ -328,7 +328,7 @@ defineExpose({ search })
         :options="suggestionOptions"
         @select="onSuggestionSelect"
         @clickoutside="() => (suggestionsShowing = false)" />
-      <n-button :loading="searching" type="primary" class="w-15%" size="small" @click="search(searchInput.trim(), 1)">
+      <n-button :loading="searching" type="primary" size="small" @click="search(searchInput.trim(), 1)">
         <template #icon>
           <n-icon size="22">
             <PhMagnifyingGlass />
@@ -345,7 +345,7 @@ defineExpose({ search })
         v-model:value="comicIdInput"
         clearable
         @keydown.enter="pickComic" />
-      <n-button type="primary" class="w-15%" size="small" @click="pickComic">
+      <n-button type="primary" size="small" @click="pickComic">
         <template #icon>
           <n-icon size="22">
             <PhArrowRight />

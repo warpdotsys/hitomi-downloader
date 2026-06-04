@@ -94,7 +94,10 @@
     "read": "阅读"
   },
   "reader_pane": {
-    "name": "阅读器"
+    "name": "阅读器",
+    "toggle_mode": "切换模式 (M)",
+    "fit_width": "适应宽度 (F)",
+    "thumbnails": "缩略图 (T)"
   },
   "downloading_pane": {
     "name": "下载列表",

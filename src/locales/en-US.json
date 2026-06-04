@@ -94,7 +94,10 @@
     "read": "Read"
   },
   "reader_pane": {
-    "name": "Reader"
+    "name": "Reader",
+    "toggle_mode": "Toggle Mode (M)",
+    "fit_width": "Fit Width (F)",
+    "thumbnails": "Thumbnails (T)"
   },
   "downloading_pane": {
     "name": "Downloads",

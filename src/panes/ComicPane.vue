@@ -4,7 +4,6 @@ import { Comic, commands } from '../bindings.ts'
 import { computed, watch, ref, nextTick } from 'vue'
 import { useI18n, translateTag } from '../utils.ts'
 import DownloadButton from '../components/DownloadButton.vue'
-import { PhArrowClockwise } from '@phosphor-icons/vue'
 import ComicCard from '../components/ComicCard.vue'
 
 const { t, locale } = useI18n()
@@ -28,9 +27,7 @@ watch(
     if (store.pickedComic === undefined) {
       return
     }
-    console.log(containerRef.value)
     if (containerRef.value !== undefined) {
-      console.log('scrollTo')
       nextTick(() => containerRef.value?.scrollTo({ top: 0, behavior: 'instant' }))
     }
 
@@ -52,7 +49,6 @@ async function pickComic(id: number) {
 }
 
 async function reloadRelatedComics() {
-  console.log('reloadRelatedComics')
   if (store.pickedComic === undefined) {
     return
   }
@@ -98,11 +94,7 @@ async function showComicDownloadDirInFileManager() {
     <span class="font-bold text-xl">{{ store.pickedComic.title }}</span>
     <div class="flex w-full">
       <img v-if="cover !== undefined" class="w-40 object-cover mr-2" :src="cover" alt="" />
-      <n-icon v-else size="50" class="w-40 h-full flex items-center justify-center flex-shrink-0">
-        <PhArrowClockwise
-          class="cursor-pointer transition-transform duration-500 hover:rotate-360"
-          @click="store.loadCover(store.pickedComic.id, store.pickedComic.coverUrl)" />
-      </n-icon>
+      <n-skeleton v-else class="w-40 h-56 mr-2" :sharp="false" />
       <div class="flex flex-col w-full gap-1">
         <div>
           <!-- TODO: format the date with i18n -->

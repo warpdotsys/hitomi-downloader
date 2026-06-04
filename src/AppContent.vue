@@ -92,7 +92,13 @@ onMounted(async () => {
 <template>
   <div v-if="store.config !== undefined" class="h-screen flex flex-col">
     <div class="flex flex-1 overflow-hidden">
-      <n-tabs ref="tabsInstRef" class="h-full w-1/2" v-model:value="store.currentTabName" type="line" size="small" animated>
+      <n-tabs
+        ref="tabsInstRef"
+        class="h-full flex-[3] min-w-0"
+        v-model:value="store.currentTabName"
+        type="line"
+        size="small"
+        animated>
         <n-tab-pane
           class="h-full overflow-auto p-0!"
           name="search"
@@ -114,30 +120,29 @@ onMounted(async () => {
           <reader-pane />
         </n-tab-pane>
       </n-tabs>
-      <div class="w-1/2 overflow-auto h-full flex flex-col">
-        <div class="flex gap-2 px-2 box-border items-center">
-          <n-button @click="logViewerShowing = true">
+      <div class="flex-[2] min-w-0 overflow-auto h-full flex flex-col border-l border-gray-2">
+        <div class="flex gap-2 px-2 py-1 box-border items-center border-b border-gray-2 bg-gray-50">
+          <n-button size="small" quaternary @click="logViewerShowing = true">
             <template #icon>
-              <n-icon size="22">
+              <n-icon size="20">
                 <PhClockCounterClockwise />
               </n-icon>
             </template>
             {{ t('log_viewer.name') }}
           </n-button>
-          <n-button @click="aboutDialogShowing = true">
+          <n-button size="small" quaternary @click="aboutDialogShowing = true">
             <template #icon>
-              <n-icon size="22">
+              <n-icon size="20">
                 <PhInfo />
               </n-icon>
             </template>
             {{ t('about_dialog.name') }}
           </n-button>
-
-          <div class="ml-auto flex items-center">
-            <n-icon size="28">
+          <div class="ml-auto flex items-center gap-1">
+            <n-icon size="22">
               <PhTranslate />
             </n-icon>
-            <n-select class="w-30" v-model:value="locale" :options="localeOptions" />
+            <n-select class="w-28" size="small" v-model:value="locale" :options="localeOptions" />
           </div>
         </div>
         <downloading-pane
