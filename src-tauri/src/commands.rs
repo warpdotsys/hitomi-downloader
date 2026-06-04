@@ -388,7 +388,18 @@ pub fn show_path_in_file_manager(app: AppHandle, path: &str) -> CommandResult<()
 pub async fn get_cover_data(
     hitomi_client: State<'_, HitomiClient>,
     cover_url: String,
+    comic_download_dir: Option<String>,
 ) -> CommandResult<Vec<u8>> {
+    // Try local cover first if download directory is provided
+    if let Some(ref dir) = comic_download_dir {
+        let cover_path = PathBuf::from(dir).join("cover.webp");
+        if cover_path.exists() {
+            if let Ok(data) = fs::read(&cover_path) {
+                return Ok(data);
+            }
+        }
+    }
+
     let cover_data = hitomi_client
         .get_cover_data(&cover_url)
         .await

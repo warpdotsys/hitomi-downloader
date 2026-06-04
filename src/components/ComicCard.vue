@@ -26,7 +26,7 @@ const isDownloaded = computed(() => props.comic.isDownloaded === true)
 
 onMounted(() => {
   if (cover.value === undefined) {
-    store.loadCover(props.comic.id, props.comic.coverUrl)
+    store.loadCover(props.comic.id, props.comic.coverUrl, props.comic.comicDownloadDir)
   }
 })
 

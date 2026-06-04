@@ -117,9 +117,9 @@ export const commands = {
       else return { status: 'error', error: e as any }
     }
   },
-  async getCoverData(coverUrl: string): Promise<Result<number[], CommandError>> {
+  async getCoverData(coverUrl: string, comicDownloadDir: string | null): Promise<Result<number[], CommandError>> {
     try {
-      return { status: 'ok', data: await TAURI_INVOKE('get_cover_data', { coverUrl }) }
+      return { status: 'ok', data: await TAURI_INVOKE('get_cover_data', { coverUrl, comicDownloadDir }) }
     } catch (e) {
       if (e instanceof Error) throw e
       else return { status: 'error', error: e as any }

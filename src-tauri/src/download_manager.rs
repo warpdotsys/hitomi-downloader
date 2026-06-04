@@ -295,12 +295,18 @@ impl DownloadTask {
                 return;
             }
         };
-        // finally, save the metadata of this comic
+        // finally, save the metadata and cover of this comic
         if let Err(err) = self.save_metadata(&download_dir) {
             let err_title = format!("Failed to save metadata of `{comic_title}`");
             let string_chain = err.to_string_chain();
             tracing::error!(err_title, message = string_chain);
             return;
+        }
+        if let Err(err) = self.save_cover(&download_dir).await {
+            let err_title = format!("Failed to save cover of `{comic_title}`");
+            let string_chain = err.to_string_chain();
+            tracing::error!(err_title, message = string_chain);
+            // cover saving failure is not fatal, continue
         }
         tracing::info!(id, comic_title, "Comic download successfully");
 
@@ -533,6 +539,26 @@ impl DownloadTask {
             metadata_path.display()
         ))?;
 
+        Ok(())
+    }
+
+    async fn save_cover(&self, download_dir: &Path) -> anyhow::Result<()> {
+        let comic_title = &self.comic.title;
+        let cover_url = &self.comic.cover_url;
+        let hitomi_client = self.app.state::<HitomiClient>().inner().clone();
+
+        let cover_data = hitomi_client
+            .get_cover_data(cover_url)
+            .await
+            .context(format!("Failed to download cover for `{comic_title}`"))?;
+
+        let cover_path = download_dir.join("cover.webp");
+        std::fs::write(&cover_path, &cover_data).context(format!(
+            "Failed to save cover for `{comic_title}` to `{}`",
+            cover_path.display()
+        ))?;
+
+        tracing::trace!(comic_title, "Cover saved to `{}`", cover_path.display());
         Ok(())
     }
 

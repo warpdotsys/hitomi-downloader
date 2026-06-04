@@ -32,7 +32,7 @@ watch(
     }
 
     if (cover.value === undefined) {
-      store.loadCover(store.pickedComic.id, store.pickedComic.coverUrl)
+      store.loadCover(store.pickedComic.id, store.pickedComic.coverUrl, store.pickedComic.comicDownloadDir)
     }
 
     reloadRelatedComics()

@@ -18,6 +18,8 @@ use download_manager::DownloadManager;
 use events::{DownloadSpeedEvent, DownloadTaskEvent, ExportCbzEvent, ExportPdfEvent, LogEvent};
 use hitomi_client::HitomiClient;
 use parking_lot::RwLock;
+use tauri::menu::{Menu, MenuItem};
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{Manager, Wry};
 
 use crate::commands::*;
@@ -119,7 +121,54 @@ pub fn run() {
             // 初始化日志系统
             logger::init(app.handle())?;
 
+            // 创建系统托盘菜单
+            let show_item = MenuItem::with_id(app, "show", "显示窗口", true, None::<&str>)?;
+            let quit_item = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
+            let menu = Menu::with_items(app, &[&show_item, &quit_item])?;
+
+            // 创建系统托盘图标
+            let _tray = TrayIconBuilder::new()
+                .icon(app.default_window_icon().unwrap().clone())
+                .menu(&menu)
+                .tooltip("hitomi-downloader")
+                .on_menu_event(move |app, event| match event.id().as_ref() {
+                    "show" => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        }
+                    }
+                    "quit" => {
+                        app.exit(0);
+                    }
+                    _ => {}
+                })
+                .on_tray_icon_event(|tray, event| {
+                    if let TrayIconEvent::Click {
+                        button: MouseButton::Left,
+                        button_state: MouseButtonState::Up,
+                        ..
+                    } = event
+                    {
+                        let app = tray.app_handle();
+                        if let Some(window) = app.get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        }
+                    }
+                })
+                .build(app)?;
+
             Ok(())
+        })
+        .on_window_event(|window, event| {
+            // 拦截窗口关闭事件，改为隐藏窗口到托盘
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                // 阻止窗口关闭
+                api.prevent_close();
+                // 隐藏窗口
+                let _ = window.hide();
+            }
         })
         .run(generate_context())
         .expect("error while running tauri application");

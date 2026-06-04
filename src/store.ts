@@ -11,8 +11,8 @@ export const useStore = defineStore('store', () => {
   const covers = ref<Map<number, string>>(new Map())
   const searchResult = ref<SearchResult>()
 
-  async function loadCover(id: number, url: string) {
-    const result = await commands.getCoverData(url)
+  async function loadCover(id: number, url: string, comicDownloadDir?: string | null) {
+    const result = await commands.getCoverData(url, comicDownloadDir ?? null)
     if (result.status === 'error') {
       console.error(result.error)
       return
