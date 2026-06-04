@@ -174,7 +174,7 @@ pub fn pause_download_task(download_manager: State<DownloadManager>, id: i32) ->
 #[specta::specta]
 pub async fn download_comics_by_ids(
     hitomi_client: State<'_, HitomiClient>,
-    download_manager: State<DownloadManager>,
+    download_manager: State<'_, DownloadManager>,
     ids: Vec<i32>,
 ) -> CommandResult<()> {
     let total = ids.len();
