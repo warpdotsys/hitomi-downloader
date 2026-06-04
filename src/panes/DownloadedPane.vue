@@ -182,13 +182,6 @@ async function exportAllPdf() {
     }
   }
 }
-  console.log(currentPageComics.value)
-
-  const result = await commands.showPathInFileManager(store.config.exportDir)
-  if (result.status === 'error') {
-    console.error(result.error)
-  }
-}
 
 const { selectedIds, selectionAreaRef, selectableRefs, updateSelectedIds, unselectAll, onContextMenu, toggleSelection } = useMultiSelect()
 const { contextMenuX, contextMenuY, contextMenuShowing, contextMenuOptions, showContextMenu } = useContextMenu()
