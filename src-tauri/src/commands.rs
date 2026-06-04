@@ -357,18 +357,6 @@ pub fn export_pdf(app: AppHandle, comic: Comic) -> CommandResult<()> {
 #[tauri::command(async)]
 #[specta::specta]
 #[allow(clippy::needless_pass_by_value)]
-pub fn export_cbz(app: AppHandle, comic: Comic) -> CommandResult<()> {
-    let title = &comic.title;
-    export::cbz(&app, &comic).map_err(|err| {
-        CommandError::from(&format!("Failed to export cbz for comic `{title}`"), err)
-    })?;
-    tracing::debug!("Exported cbz for comic `{title}` successfully");
-    Ok(())
-}
-
-#[tauri::command(async)]
-#[specta::specta]
-#[allow(clippy::needless_pass_by_value)]
 pub async fn get_search_suggestions(
     hitomi_client: State<'_, HitomiClient>,
     query: String,
