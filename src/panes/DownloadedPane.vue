@@ -6,7 +6,7 @@ import { open } from '@tauri-apps/plugin-dialog'
 import { useStore } from '../store.ts'
 import ComicCard from '../components/ComicCard.vue'
 import { useI18n } from '../utils.ts'
-import { PhFolderOpen, PhChecks, PhFilePdf, PhFileZip, PhDownload } from '@phosphor-icons/vue'
+import { PhFolderOpen, PhChecks, PhFilePdf, PhFileZip } from '@phosphor-icons/vue'
 import { SelectionArea } from '@viselect/vue'
 import { useMultiSelect } from '../composables/useMultiSelect.ts'
 

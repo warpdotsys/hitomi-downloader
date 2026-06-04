@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from '../store.ts'
-import { commands, GalleryFiles } from '../bindings.ts'
+import { commands } from '../bindings.ts'
 import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { PhCaretLeft, PhCaretRight, PhList, PhRows, PhArrowsOutSimple } from '@phosphor-icons/vue'
 import { useI18n } from '../utils.ts'
