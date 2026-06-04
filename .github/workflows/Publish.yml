@@ -10,7 +10,7 @@ env:
 
 jobs:
   get-version:
-    runs-on: [self-hosted, DE, linux]
+    runs-on: ubuntu-latest
     outputs:
       VERSION: ${{ steps.get_version.outputs.VERSION }}
     steps:
@@ -74,7 +74,7 @@ jobs:
       VERSION: ${{ needs.get-version.outputs.VERSION }}
     outputs:
       VERSION: ${{ env.VERSION }}
-    runs-on: [self-hosted, DE, linux]
+    runs-on: ubuntu-24.04
     steps:
       - name: install dependencies
         run: |
